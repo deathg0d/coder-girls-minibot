@@ -1,0 +1,41 @@
+let y = 0
+let x = 0
+radio.setGroup(1)
+basic.showString("S")
+basic.forever(() => {
+    if (input.buttonIsPressed(Button.A)) {
+        x = input.acceleration(Dimension.X)
+        y = input.acceleration(Dimension.Y)
+    }
+    if (input.buttonIsPressed(Button.B)) {
+        radio.sendString("S")
+    }
+    if (input.acceleration(Dimension.Y) < y - 200) {
+        radio.sendString("F")
+        basic.showString("F")
+        if (input.acceleration(Dimension.X) > x + 200) {
+            radio.sendString("FR")
+            basic.showString("R")
+        } else if (input.acceleration(Dimension.X) < x - 200) {
+            radio.sendString("FL")
+            basic.showString("L")
+        } else {
+            radio.sendString("F")
+            basic.showString("F")
+        }
+    } else if (input.acceleration(Dimension.Y) > y + 200) {
+        radio.sendString("B")
+        basic.showString("B")
+        if (input.acceleration(Dimension.X) > x + 200) {
+            radio.sendString("BR")
+            basic.showString("R")
+        } else if (input.acceleration(Dimension.X) < x - 200) {
+            radio.sendString("BL")
+            basic.showString("L")
+        } else {
+            radio.sendString("B")
+            basic.showString("B")
+        }
+    }
+})
+
