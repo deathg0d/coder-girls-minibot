@@ -1,4 +1,11 @@
+// Set radio group so that the micro:bits can
+// communicate with each other
+radio.setGroup(1)
+basic.showString("R")
+
+
 radio.onDataPacketReceived( ({ receivedString }) =>  {
+    // To Stop (when "S" is received), reset everything
     if (receivedString == "S") {
         pins.analogWritePin(AnalogPin.P0, 0)
         pins.analogWritePin(AnalogPin.P1, 0)
@@ -7,6 +14,8 @@ radio.onDataPacketReceived( ({ receivedString }) =>  {
         pins.digitalWritePin(DigitalPin.P16, 0)
         pins.digitalWritePin(DigitalPin.P2, 0)
         basic.showString("S")
+    // To move Forward (when "F" is received)),
+    // move both wheels in forward direction 
     } else if (receivedString == "F") {
         pins.analogWritePin(AnalogPin.P0, 1000)
         pins.analogWritePin(AnalogPin.P1, 1000)
@@ -15,6 +24,8 @@ radio.onDataPacketReceived( ({ receivedString }) =>  {
         pins.digitalWritePin(DigitalPin.P16, 1)
         pins.digitalWritePin(DigitalPin.P2, 0)
         basic.showArrow(ArrowNames.North)
+    // If move Forward Right (when "FR" is received),
+    // move only right wheel in forward direction
     } else if (receivedString == "FR") {
         pins.analogWritePin(AnalogPin.P0, 0)
         pins.analogWritePin(AnalogPin.P1, 1000)
@@ -23,6 +34,8 @@ radio.onDataPacketReceived( ({ receivedString }) =>  {
         pins.digitalWritePin(DigitalPin.P16, 1)
         pins.digitalWritePin(DigitalPin.P2, 0)
         basic.showArrow(ArrowNames.NorthEast)
+    // If move Forward Left (when "FL" is received),
+    // move only left wheel in forward direction
     } else if (receivedString == "FL") {
         pins.analogWritePin(AnalogPin.P0, 1000)
         pins.analogWritePin(AnalogPin.P1, 0)
@@ -31,6 +44,8 @@ radio.onDataPacketReceived( ({ receivedString }) =>  {
         pins.digitalWritePin(DigitalPin.P16, 0)
         pins.digitalWritePin(DigitalPin.P2, 0)
         basic.showArrow(ArrowNames.NorthWest)
+    // To move Backward (when "B" is received)),
+    // move both wheels in reverse direction 
     } else if (receivedString == "B") {
         pins.analogWritePin(AnalogPin.P0, 1000)
         pins.analogWritePin(AnalogPin.P1, 1000)
@@ -39,6 +54,8 @@ radio.onDataPacketReceived( ({ receivedString }) =>  {
         pins.digitalWritePin(DigitalPin.P16, 0)
         pins.digitalWritePin(DigitalPin.P2, 1)
         basic.showArrow(ArrowNames.South)
+    // If move Backward Right (when "BR" is received),
+    // move only right wheel in reverse direction
     } else if (receivedString == "BR") {
         pins.analogWritePin(AnalogPin.P0, 0)
         pins.analogWritePin(AnalogPin.P1, 1000)
@@ -47,6 +64,8 @@ radio.onDataPacketReceived( ({ receivedString }) =>  {
         pins.digitalWritePin(DigitalPin.P16, 0)
         pins.digitalWritePin(DigitalPin.P2, 0)
         basic.showArrow(ArrowNames.SouthEast)
+    // If move Backward Left (when "BL" is received),
+    // move only left wheel in reverse direction
     } else if (receivedString == "BL") {
         pins.analogWritePin(AnalogPin.P0, 1000)
         pins.analogWritePin(AnalogPin.P1, 0)
@@ -55,6 +74,7 @@ radio.onDataPacketReceived( ({ receivedString }) =>  {
         pins.digitalWritePin(DigitalPin.P16, 0)
         pins.digitalWritePin(DigitalPin.P2, 1)
         basic.showArrow(ArrowNames.SouthWest)
+    // Reset everything to stop the mini bot
     } else {
         pins.analogWritePin(AnalogPin.P0, 0)
         pins.analogWritePin(AnalogPin.P1, 0)
@@ -65,5 +85,3 @@ radio.onDataPacketReceived( ({ receivedString }) =>  {
         basic.showString("S")
     }
 })
-radio.setGroup(1)
-basic.showString("G")
