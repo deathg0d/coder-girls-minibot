@@ -1,12 +1,12 @@
 radio.onDataPacketReceived( ({ receivedString }) =>  {
     if (receivedString == "S") {
+        pins.analogWritePin(AnalogPin.P0, 0)
         pins.analogWritePin(AnalogPin.P1, 0)
-        pins.analogWritePin(AnalogPin.P2, 0)
-        pins.digitalWritePin(DigitalPin.P0, 0)
         pins.digitalWritePin(DigitalPin.P8, 0)
         pins.digitalWritePin(DigitalPin.P12, 0)
         pins.digitalWritePin(DigitalPin.P16, 0)
-		  basic.showString(“S”)
+        pins.digitalWritePin(DigitalPin.P2, 0)
+        basic.showString("S")
     } else if (receivedString == "F") {
         pins.analogWritePin(AnalogPin.P0, 1000)
         pins.analogWritePin(AnalogPin.P1, 1000)
@@ -14,7 +14,7 @@ radio.onDataPacketReceived( ({ receivedString }) =>  {
         pins.digitalWritePin(DigitalPin.P12, 0)
         pins.digitalWritePin(DigitalPin.P16, 1)
         pins.digitalWritePin(DigitalPin.P2, 0)
-        basic.showString("F")
+        basic.showArrow(ArrowNames.North)
     } else if (receivedString == "FR") {
         pins.analogWritePin(AnalogPin.P0, 0)
         pins.analogWritePin(AnalogPin.P1, 1000)
@@ -22,7 +22,7 @@ radio.onDataPacketReceived( ({ receivedString }) =>  {
         pins.digitalWritePin(DigitalPin.P12, 0)
         pins.digitalWritePin(DigitalPin.P16, 1)
         pins.digitalWritePin(DigitalPin.P2, 0)
-        basic.showString("R")
+        basic.showArrow(ArrowNames.NorthEast)
     } else if (receivedString == "FL") {
         pins.analogWritePin(AnalogPin.P0, 1000)
         pins.analogWritePin(AnalogPin.P1, 0)
@@ -30,7 +30,7 @@ radio.onDataPacketReceived( ({ receivedString }) =>  {
         pins.digitalWritePin(DigitalPin.P12, 0)
         pins.digitalWritePin(DigitalPin.P16, 0)
         pins.digitalWritePin(DigitalPin.P2, 0)
-        basic.showString("L")
+        basic.showArrow(ArrowNames.NorthWest)
     } else if (receivedString == "B") {
         pins.analogWritePin(AnalogPin.P0, 1000)
         pins.analogWritePin(AnalogPin.P1, 1000)
@@ -38,7 +38,7 @@ radio.onDataPacketReceived( ({ receivedString }) =>  {
         pins.digitalWritePin(DigitalPin.P12, 1)
         pins.digitalWritePin(DigitalPin.P16, 0)
         pins.digitalWritePin(DigitalPin.P2, 1)
-        basic.showString("B")
+        basic.showArrow(ArrowNames.South)
     } else if (receivedString == "BR") {
         pins.analogWritePin(AnalogPin.P0, 0)
         pins.analogWritePin(AnalogPin.P1, 1000)
@@ -46,17 +46,24 @@ radio.onDataPacketReceived( ({ receivedString }) =>  {
         pins.digitalWritePin(DigitalPin.P12, 1)
         pins.digitalWritePin(DigitalPin.P16, 0)
         pins.digitalWritePin(DigitalPin.P2, 0)
-        basic.showString("R")
+        basic.showArrow(ArrowNames.SouthEast)
     } else if (receivedString == "BL") {
         pins.analogWritePin(AnalogPin.P0, 1000)
         pins.analogWritePin(AnalogPin.P1, 0)
         pins.digitalWritePin(DigitalPin.P8, 0)
-        pins.digitalWritePin(DigitalPin.P12, 1)
+        pins.digitalWritePin(DigitalPin.P12, 0)
+        pins.digitalWritePin(DigitalPin.P16, 0)
+        pins.digitalWritePin(DigitalPin.P2, 1)
+        basic.showArrow(ArrowNames.SouthWest)
+    } else {
+        pins.analogWritePin(AnalogPin.P0, 0)
+        pins.analogWritePin(AnalogPin.P1, 0)
+        pins.digitalWritePin(DigitalPin.P8, 0)
+        pins.digitalWritePin(DigitalPin.P12, 0)
         pins.digitalWritePin(DigitalPin.P16, 0)
         pins.digitalWritePin(DigitalPin.P2, 0)
-        basic.showString("L")
+        basic.showString("S")
     }
 })
 radio.setGroup(1)
 basic.showString("G")
-

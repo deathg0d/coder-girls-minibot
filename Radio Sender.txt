@@ -1,41 +1,51 @@
 let y = 0
+let move = 0
 let x = 0
 radio.setGroup(1)
-basic.showString("S")
 basic.forever(() => {
-    if (input.buttonIsPressed(Button.A)) {
+    if (input.buttonIsPressed(Button.AB)) {
         x = input.acceleration(Dimension.X)
         y = input.acceleration(Dimension.Y)
+        basic.showString("C")
+    } else if (input.buttonIsPressed(Button.A)) {
+        move = 1
+        basic.showString("M")
     }
     if (input.buttonIsPressed(Button.B)) {
+        move = 0
         radio.sendString("S")
+        basic.showString("S")
     }
-    if (input.acceleration(Dimension.Y) < y - 200) {
-        radio.sendString("F")
-        basic.showString("F")
-        if (input.acceleration(Dimension.X) > x + 200) {
-            radio.sendString("FR")
-            basic.showString("R")
-        } else if (input.acceleration(Dimension.X) < x - 200) {
-            radio.sendString("FL")
-            basic.showString("L")
-        } else {
+    if (move == 1) {
+        if (input.acceleration(Dimension.Y) < y - 200) {
             radio.sendString("F")
-            basic.showString("F")
-        }
-    } else if (input.acceleration(Dimension.Y) > y + 200) {
-        radio.sendString("B")
-        basic.showString("B")
-        if (input.acceleration(Dimension.X) > x + 200) {
-            radio.sendString("BR")
-            basic.showString("R")
-        } else if (input.acceleration(Dimension.X) < x - 200) {
-            radio.sendString("BL")
-            basic.showString("L")
-        } else {
+            basic.showArrow(ArrowNames.North)
+            if (input.acceleration(Dimension.X) > x + 200) {
+                radio.sendString("FR")
+                basic.showArrow(ArrowNames.NorthEast)
+            } else if (input.acceleration(Dimension.X) < x - 200) {
+                radio.sendString("FL")
+                basic.showArrow(ArrowNames.NorthWest)
+            } else {
+                radio.sendString("F")
+                basic.showArrow(ArrowNames.North)
+            }
+        } else if (input.acceleration(Dimension.Y) > y + 200) {
             radio.sendString("B")
-            basic.showString("B")
+            basic.showArrow(ArrowNames.South)
+            if (input.acceleration(Dimension.X) > x + 200) {
+                radio.sendString("BR")
+                basic.showArrow(ArrowNames.SouthEast)
+            } else if (input.acceleration(Dimension.X) < x - 200) {
+                radio.sendString("BL")
+                basic.showArrow(ArrowNames.SouthWest)
+            } else {
+                radio.sendString("B")
+                basic.showArrow(ArrowNames.South)
+            }
         }
+    } else {
+        radio.sendString("S")
+        basic.showString("S")
     }
 })
-
