@@ -19,6 +19,8 @@ List of items required:
 * 2 x Motor and wheel set
 * Double Sided Tape
 * 1 x Box
+* 4 x M3x25mm screws
+* Screw Driver
 
-Wire connections for the Minibot:
+Wire connections for the Minibot (Between receiver Micro:bit and motor driver):
 [![Connection information for the minibot](https://github.com/deathg0d/coder-girls-minibot/raw/master/assets/wiring.jpg)](https://github.com/deathg0d/coder-girls-minibot/raw/master/assets/wiring.pdf)
