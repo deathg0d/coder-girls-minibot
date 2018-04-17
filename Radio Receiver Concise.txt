@@ -1,0 +1,77 @@
+// Set radio group so that the micro:bits can communicate with each other
+// This code is concise (if you remove the comments)
+// but also runs a little bit slower on the micro:bit.
+// Check Radio Receiver.txt for a different version.
+
+radio.setGroup(1)
+basic.showString("R")
+
+function setPWM(pwmValues: number[]): void {
+    pins.analogWritePin(AnalogPin.P0, pwmValues[0])
+    pins.analogWritePin(AnalogPin.P2, pwmValues[1])
+}
+
+function setDirection(pinValues: number[]): void {
+    pins.digitalWritePin(DigitalPin.P1, pinValues[0])
+    pins.digitalWritePin(DigitalPin.P8, pinValues[1])
+    pins.digitalWritePin(DigitalPin.P12, pinValues[2])
+    pins.digitalWritePin(DigitalPin.P16, pinValues[3])
+}
+
+function controlMotors(d: string): void{
+
+    let pinValues: number[] = [0,0,0,0];    // these represent values for pins 1, 8, 12 and 16 respectively
+                                            /*  These pins from the microbit connect to the motor driver as following:
+                                                Array Index     Microbit                Motor Driver
+                                                0               1           ->          8
+                                                1               8           ->          9
+                                                2               12          ->          10
+                                                3               16          ->          11
+                                            */
+    let pwmValues: number[] = [0,0];    // these represent values for pins 0 and 2 respectively
+                                            /*  These pins from the microbit connect to the motor driver as following:
+                                                Array Index     Microbit                Motor Driver
+                                                0               0           ->          7
+                                                1               2           ->          12
+                                            */
+    
+    if (d == "F"){
+        pwmValues[0] = 1000;
+        pwmValues[1] = 1000;
+        pinValues[0] = 1;
+        pinValues[2] = 1;
+        basic.showArrow(ArrowNames.North);
+    }else if (d == "FR"){
+        pwmValues[1] = 1000;
+        pinValues[2] = 1;
+        basic.showArrow(ArrowNames.NorthEast);
+    }else if (d == "FL"){
+        pwmValues[0] = 1000;
+        pinValues[0] = 1;
+        basic.showArrow(ArrowNames.NorthWest);
+    }else if (d == "B"){
+        pwmValues[0] = 1000;
+        pwmValues[1] = 1000;
+        pinValues[1] = 1;
+        pinValues[3] = 1;
+        basic.showArrow(ArrowNames.South);
+    }else if (d == "BR"){
+        pwmValues[1] = 1000;
+        pinValues[3] = 1;
+        basic.showArrow(ArrowNames.SouthEast);
+    }else if (d == "BL"){
+        pwmValues[0] = 1000;
+        pinValues[1] = 1;
+        basic.showArrow(ArrowNames.SouthWest);
+    }else {
+        basic.showString("S");
+    }
+
+    setPWM(pwmValues);
+    setDirection(pinValues);
+
+}
+
+radio.onDataPacketReceived(({ receivedString }) => {
+    controlMotors(receivedString);
+})
